@@ -159,9 +159,9 @@ const defaultState: StateApp = {
   selectedClashAPIConfigIndex: 0,
   clashAPIConfigs: [defaultClashAPIConfig],
 
-  latencyTestUrl: 'https://www.gstatic.com/generate_204',
+  latencyTestUrl: 'http://cp.cloudflare.com',
   selectedChartStyleIndex: 0,
-  theme: 'dark',
+  theme: 'auto',
 
   // type { [string]: boolean }
   collapsibleIsOpen: {},
