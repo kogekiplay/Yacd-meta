@@ -29,7 +29,9 @@ export const data = {
   order_name_asc: 'By name alphabetically (A-Z)',
   order_name_desc: 'By name alphabetically (Z-A)',
   Connections: 'Connections',
+  current_backend: 'Current Backend',
   Active: 'Active',
+  switch_backend: 'Switch backend',
   Closed: 'Closed',
   switch_theme: 'Switch theme',
   theme: 'theme',
@@ -61,4 +63,7 @@ export const data = {
   c_source: 'Source',
   c_destination_ip: 'Destination IP',
   c_type: 'Type',
+  close_all_confirm: 'Are you sure you want to close all connections?',
+  close_all_confirm_yes: "I'm sure",
+  close_all_confirm_no: 'No',
 };

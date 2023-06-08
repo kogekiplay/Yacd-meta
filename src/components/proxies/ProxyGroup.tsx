@@ -20,7 +20,7 @@ import { useFilteredAndSorted } from './hooks';
 import s0 from './ProxyGroup.module.scss';
 import { ProxyList, ProxyListSummaryView } from './ProxyList';
 
-const { createElement, useCallback, useMemo, useState } = React;
+const { createElement, useCallback, useMemo, useState, useEffect } = React;
 
 function ZapWrapper() {
   return (
@@ -86,29 +86,71 @@ function ProxyGroupImpl({
     setIsTestingLatency(false);
   }, [all, apiConfig, dispatch, name, version.meta]);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const updateWindowWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWindowWidth);
+    return () => window.removeEventListener('resize', updateWindowWidth);
+  }, []);
+
   return (
     <div className={s0.group}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: windowWidth > 768 ? 'start' : 'space-between',
+        }}
+      >
         <CollapsibleSectionHeader name={name} type={type} toggle={toggle} qty={all.length} />
         <div style={{ display: 'flex' }}>
-          <Button
-            title="Test latency"
-            kind="minimal"
-            onClick={testLatency}
-            isLoading={isTestingLatency}
-          >
-            <ZapWrapper />
-          </Button>
-          <Button
-            kind="minimal"
-            onClick={toggle}
-            className={s0.btn}
-            title="Toggle collapsible section"
-          >
-            <span className={cx(s0.arrow, { [s0.isOpen]: isOpen })}>
-              <ChevronDown size={20} />
-            </span>
-          </Button>
+          {windowWidth > 768 ? (
+            <>
+              <Button
+                kind="minimal"
+                onClick={toggle}
+                className={s0.btn}
+                title="Toggle collapsible section"
+              >
+                <span className={cx(s0.arrow, { [s0.isOpen]: isOpen })}>
+                  <ChevronDown size={20} />
+                </span>
+              </Button>
+              <Button
+                title="Test latency"
+                kind="minimal"
+                onClick={testLatency}
+                isLoading={isTestingLatency}
+              >
+                <ZapWrapper />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                title="Test latency"
+                kind="minimal"
+                onClick={testLatency}
+                isLoading={isTestingLatency}
+              >
+                <ZapWrapper />
+              </Button>
+              <Button
+                kind="minimal"
+                onClick={toggle}
+                className={s0.btn}
+                title="Toggle collapsible section"
+              >
+                <span className={cx(s0.arrow, { [s0.isOpen]: isOpen })}>
+                  <ChevronDown size={20} />
+                </span>
+              </Button>
+            </>
+          )}
         </div>
       </div>
       {createElement(isOpen ? ProxyList : ProxyListSummaryView, {

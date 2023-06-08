@@ -82,10 +82,13 @@ function ProxySmallImpl({
   isSelectable,
   onClick,
 }: ProxyProps) {
+  const delay = proxy.history[proxy.history.length - 1]?.delay;
+  const latencyNumber = latency?.number ?? delay;
   const color = useMemo(
-    () => getProxyDotBackgroundColor(latency, httpsLatencyTest),
-    [latency, proxy]
+    () => getProxyDotBackgroundColor({ number: latencyNumber }, httpsLatencyTest),
+    [latencyNumber]
   );
+
   const title = useMemo(() => {
     let ret = name;
     if (latency && typeof latency.number === 'number') {
@@ -159,7 +162,13 @@ function ProxyImpl({
   isSelectable,
   onClick,
 }: ProxyProps) {
-  const color = useMemo(() => getLabelColor(latency, httpsLatencyTest), [latency]);
+  const delay = proxy.history[proxy.history.length - 1]?.delay;
+  const latencyNumber = latency?.number ?? delay;
+  const color = useMemo(
+    () => getLabelColor({ number: latencyNumber }, httpsLatencyTest),
+    [latencyNumber]
+  );
+
   const doSelect = React.useCallback(() => {
     isSelectable && onClick && onClick(name);
   }, [name, onClick, isSelectable]);
@@ -201,7 +210,7 @@ function ProxyImpl({
     });
   }, [isSelectable, now, latency]);
 
-  const latencyNumber = latency?.number ?? proxy.history[proxy.history.length - 1]?.delay;
+  // const latencyNumber = latency?.number ?? proxy.history[proxy.history.length - 1]?.delay;
 
   return (
     <div
@@ -242,8 +251,9 @@ const mapState = (s: any, { name }) => {
   const proxies = getProxies(s);
   const delay = getDelay(s);
   const latencyTestUrl = getLatencyTestUrl(s);
+  const proxy = proxies[name] || { name, history: [] };
   return {
-    proxy: proxies[name],
+    proxy: proxy,
     latency: delay[name],
     httpsLatencyTest: latencyTestUrl.startsWith('https://'),
   };

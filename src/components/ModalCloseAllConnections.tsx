@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Modal from 'react-modal';
 
 import Button from './Button';
@@ -9,6 +10,7 @@ import s from './ModalCloseAllConnections.module.scss';
 const { useRef, useCallback, useMemo } = React;
 
 export default function Comp({ isOpen, onRequestClose, primaryButtonOnTap }) {
+  const { t } = useTranslation();
   const primaryButtonRef = useRef(null);
   const onAfterOpen = useCallback(() => {
     primaryButtonRef.current.focus();
@@ -29,14 +31,13 @@ export default function Comp({ isOpen, onRequestClose, primaryButtonOnTap }) {
       className={className}
       overlayClassName={cx(modalStyle.overlay, s.overlay)}
     >
-      <p>Are you sure you want to close all connections?</p>
+      <p>{t('close_all_confirm')}</p>
       <div className={s.btngrp}>
         <Button onClick={primaryButtonOnTap} ref={primaryButtonRef}>
-          I'm sure
+          {t('close_all_confirm_yes')}
         </Button>
-        {/* im lazy :) */}
         <div style={{ width: 20 }} />
-        <Button onClick={onRequestClose}>No</Button>
+        <Button onClick={onRequestClose}>{t('close_all_confirm_no')}</Button>
       </div>
     </Modal>
   );

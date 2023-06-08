@@ -30,7 +30,9 @@ export const data = {
   order_name_asc: '按名称字母排序 (A-Z)',
   order_name_desc: '按名称字母排序 (Z-A)',
   Connections: '连接',
+  current_backend: '当前后端',
   Active: '活动',
+  switch_backend: '切换后端',
   Closed: '已断开',
   switch_theme: '切换主题',
   theme: '主题',
@@ -62,4 +64,7 @@ export const data = {
   c_type: '类型',
   restart_core: '重启 clash 核心',
   upgrade_core: '更新 Alpha 核心',
+  close_all_confirm: '确定关闭所有连接？',
+  close_all_confirm_yes: '确定',
+  close_all_confirm_no: '取消',
 };

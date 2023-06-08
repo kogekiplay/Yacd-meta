@@ -98,6 +98,16 @@ type ConfigImplProps = {
   apiConfig: ClashAPIConfig;
 };
 
+function getBackendContent(version: any): string {
+  if (version && version.meta && !version.premium) {
+    return 'Clash.Meta ';
+  } else if (version && version.meta && version.premium) {
+    return 'sing-box ';
+  } else {
+    return 'Clash Premium';
+  }
+}
+
 function ConfigImpl({
   dispatch,
   configs,
@@ -233,21 +243,20 @@ function ConfigImpl({
     <div>
       <ContentHeader title={t('Config')} />
       <div className={s0.root}>
-        {(version.meta && version.premium) || (
+        {(version.meta && version.premium) ||
           portFields.map((f) =>
-          configState[f.key] !== undefined ? (
-            <div key={f.key}>
-              <div className={s0.label}>{f.label}</div>
-              <Input
-                name={f.key}
-                value={configState[f.key]}
-                onChange={({ target: { name, value } }) => handleInputOnChange({ name, value })}
-                onBlur={handleInputOnBlur}
-              />
-            </div>
-          ) : null
-        )
-        )}
+            configState[f.key] !== undefined ? (
+              <div key={f.key}>
+                <div className={s0.label}>{f.label}</div>
+                <Input
+                  name={f.key}
+                  value={configState[f.key]}
+                  onChange={({ target: { name, value } }) => handleInputOnChange({ name, value })}
+                  onBlur={handleInputOnBlur}
+                />
+              </div>
+            ) : null
+          )}
 
         <div>
           <div className={s0.label}>Mode</div>
@@ -282,7 +291,7 @@ function ConfigImpl({
           </div>
         )}
 
-        {(version.meta && !version.premium) && (
+        {version.meta && !version.premium && (
           <div>
             <div className={s0.label}>{t('tls_sniffing')}</div>
             <div className={s0.wrapSwitch}>
@@ -355,7 +364,7 @@ function ConfigImpl({
                 onClick={handleReloadConfigFile}
               />
             </div>
-            {(version.meta && !version.premium) && (
+            {version.meta && !version.premium && (
               <div>
                 <div className={s0.label}>GEO Databases</div>
                 <Button
@@ -373,7 +382,7 @@ function ConfigImpl({
                 onClick={handleFlushFakeIPPool}
               />
             </div>
-            {(version.meta && !version.premium) && (
+            {version.meta && !version.premium && (
               <div>
                 <div className={s0.label}>Restart</div>
                 <Button
@@ -383,7 +392,7 @@ function ConfigImpl({
                 />
               </div>
             )}
-            {(version.meta && !version.premium) && (
+            {version.meta && !version.premium && (
               <div>
                 <div className={s0.label}>⚠️ Upgrade ⚠️</div>
                 <Button
@@ -432,10 +441,14 @@ function ConfigImpl({
         </div>
 
         <div>
+          <div className={s0.label}>
+            {t('current_backend')}
+            <p>{getBackendContent(version) + apiConfig.baseURL}</p>
+          </div>
           <div className={s0.label}>Action</div>
           <Button
             start={<LogOut size={16} />}
-            label="Switch backend"
+            label={t('switch_backend')}
             onClick={openAPIConfigModal}
           />
         </div>

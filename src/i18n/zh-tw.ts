@@ -30,6 +30,7 @@ export const data = {
   order_name_asc: '按名稱字母順序排序 (A-Z)',
   order_name_desc: '按名稱字母順序排序 (Z-A)',
   Connections: '連線',
+  current_backend: '當前後端',
   Active: '活動中',
   Closed: '已斷線',
   switch_theme: '切換主題',
@@ -62,4 +63,7 @@ export const data = {
   c_type: '類型',
   restart_core: '重新啟動 clash 核心',
   upgrade_core: '更新 Alpha 核心',
+  close_all_confirm: '確定關閉所有連接？',
+  close_all_confirm_yes: '確定',
+  close_all_confirm_no: '取消',
 };

@@ -34,6 +34,15 @@ export default defineConfig(({ mode }) => ({
       filename: 'sw.ts',
       strategies: 'injectManifest',
       base: './',
+      manifest: {
+        icons: [
+          {
+            src: 'apple-touch-icon-precomposed.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
+      },
     }),
   ],
 }));
