@@ -1,5 +1,5 @@
 export const data = {
-  All: '所有',
+  All: '全部',
   Overview: '概览',
   Proxies: '代理',
   Rules: '规则',

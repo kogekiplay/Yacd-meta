@@ -145,12 +145,12 @@ function modifyChains(chains: string[]): string {
 
   //倒序
   if (chains.length === 2) {
-    return chains[1] + ' / ' + chains[0];
+    return chains[1] + ' ->' + chains[0];
   }
 
   const first = chains.pop();
   const last = chains.shift();
-  return `${first} / ${last}`;
+  return `${first} ->${last}`;
 }
 
 function renderTableOrPlaceholder(conns: FormattedConn[]) {
@@ -180,7 +180,7 @@ function Conn({ apiConfig }) {
   const filteredClosedConns = filterConns(closedConns, filterKeyword, filterSourceIpStr);
 
   const connIpSet = getConnIpList(conns);
-  const ClosedConnIpSet = getConnIpList(closedConns);
+  // const ClosedConnIpSet = getConnIpList(closedConns);
 
   const [isCloseAllModalOpen, setIsCloseAllModalOpen] = useState(false);
   const openCloseAllModal = useCallback(() => setIsCloseAllModalOpen(true), []);
@@ -253,7 +253,7 @@ function Conn({ apiConfig }) {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
           }}
         >
           <TabList>
@@ -272,6 +272,22 @@ function Conn({ apiConfig }) {
               </span>
             </Tab>
           </TabList>
+
+          <div>
+            <Button onClick={() => setFilterSourceIpStr('')} kind="minimal">
+              {t('All')}
+            </Button>
+            {connIpSet.map((value, k) => {
+              if (value) {
+                return (
+                  <Button key={k} onClick={() => setFilterSourceIpStr(value)} kind="minimal">
+                    {value}
+                  </Button>
+                );
+              }
+            })}
+            {/* {renderTableOrPlaceholder(filteredClosedConns)} */}
+          </div>
         </div>
         <div ref={refContainer} style={{ padding: 30, paddingBottom: 10, paddingTop: 10 }}>
           <div
@@ -281,16 +297,6 @@ function Conn({ apiConfig }) {
             }}
           >
             <TabPanel>
-              <Button onClick={() => setFilterSourceIpStr('')} kind="minimal">
-                {t('All')}
-              </Button>
-              {connIpSet.map((value, k) => {
-                return (
-                  <Button key={k} onClick={() => setFilterSourceIpStr(value)} kind="minimal">
-                    {value}
-                  </Button>
-                );
-              })}
               {renderTableOrPlaceholder(filteredConns)}
               <Fab
                 icon={isRefreshPaused ? <Play size={16} /> : <Pause size={16} />}
@@ -304,19 +310,7 @@ function Conn({ apiConfig }) {
                 </Action>
               </Fab>
             </TabPanel>
-            <TabPanel>
-              <Button onClick={() => setFilterSourceIpStr('')} kind="minimal">
-                {t('All')}
-              </Button>
-              {ClosedConnIpSet.map((value, k) => {
-                return (
-                  <Button key={k} onClick={() => setFilterSourceIpStr(value)} kind="minimal">
-                    {value}
-                  </Button>
-                );
-              })}
-              {renderTableOrPlaceholder(filteredClosedConns)}
-            </TabPanel>
+            <TabPanel>{renderTableOrPlaceholder(filteredClosedConns)}</TabPanel>
           </div>
         </div>
         <ModalCloseAllConnections
