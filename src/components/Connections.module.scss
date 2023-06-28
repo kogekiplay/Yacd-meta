@@ -6,6 +6,7 @@
   justify-content: center;
   color: var(--color-background);
   opacity: 0.1;
+
   @media (max-width: 768px) {
     margin-top: 35%;
   }
@@ -33,6 +34,7 @@
    * we need to apply some right padding to this container then
    */
   padding-right: 15px;
+
   @media (--breakpoint-not-small) {
     padding-right: 25px;
   }
@@ -40,6 +42,7 @@
 
 .inputWrapper {
   margin: 0;
+
   @media (--breakpoint-not-small) {
     margin: 0 25px;
   }
@@ -64,4 +67,41 @@
   padding: 0 15px;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   width: 100%;
+}
+
+.sourceipContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.sourceipTable {
+  input {
+    width: 120px;
+  }
+}
+
+.iptableTipContainer {
+  width: 300px;
+}
+
+.columnManagerRow {
+  width: 200px;
+  display: flex;
+  margin: 5px 0;
+  align-items: center;
+
+  .columnManageLabel {
+    flex: 1;
+    margin-left: 10px;
+  }
+
+  .columnManageSwitch {
+    transform: scale(0.7);
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
 }

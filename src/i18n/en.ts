@@ -66,4 +66,11 @@ export const data = {
   close_all_confirm: 'Are you sure you want to close all connections?',
   close_all_confirm_yes: "I'm sure",
   close_all_confirm_no: 'No',
+  manage_column: 'Custom columns',
+  reset_column: 'Reset columns',
+  device_name: 'Device Tag',
+  delete: 'Delete',
+  add_tag: 'Add tag',
+  client_tag: 'Client tags',
+  sourceip_tip: "Prefix with / for regular expressions, otherwise it's a complete match",
 };
