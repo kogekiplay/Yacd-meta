@@ -60,6 +60,7 @@ declare module 'react-table' {
     options: TableOptions,
     useSortBy: useSortBy
   ): {
+    state: any;
     headerGroups: HeaderGroup[];
     getTableProps(): { role?: string };
     setHiddenColumns: (columns: string[]) => void;

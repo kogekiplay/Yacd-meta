@@ -7,6 +7,7 @@ const allLocales = {
   zh_cn: import('~/i18n/zh-cn'),
   zh_tw: import('~/i18n/zh-tw'),
   en: import('~/i18n/en'),
+  vi: import('~/i18n/vi'),
 };
 
 type BackendRequestCallback = (err: null, result: { status: number; data: any }) => void;
@@ -39,6 +40,9 @@ i18next
           case '/__en/translation.json':
             p = allLocales.en;
             break;
+          case '/__vi/translation.json':
+            p = allLocales.vi;
+            break;  
           default:
             p = allLocales.zh_cn;
             break;
@@ -51,7 +55,7 @@ i18next
         }
       },
     },
-    supportedLngs: ['zh-CN', 'zh-TW', 'en'],
+    supportedLngs: ['zh-CN', 'zh-TW', 'en', 'vi'],
     load: 'currentOnly',
     fallbackLng: 'en',
     interpolation: {

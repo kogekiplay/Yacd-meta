@@ -23,13 +23,15 @@ const sortById = { id: 'id', desc: true };
 function Table({ data, columns, hiddenColumns, apiConfig }) {
   const [operationId, setOperationId] = useState('');
   const [showModalDisconnect, setShowModalDisconnect] = useState(false);
+
+  // 从本地存储加载排序状态
+  const savedSortBy = JSON.parse(localStorage.getItem('tableSortBy')) || [sortById];
+
   const tableState = {
-    sortBy: [
-      // maintain a more stable order
-      sortById,
-    ],
+    sortBy: savedSortBy,
     hiddenColumns,
   };
+
   const table = useTable(
     {
       columns,
@@ -41,10 +43,12 @@ function Table({ data, columns, hiddenColumns, apiConfig }) {
   );
 
   const { getTableProps, setHiddenColumns, headerGroups, rows, prepareRow } = table;
+  const state = table.state;
 
   useEffect(() => {
     setHiddenColumns(hiddenColumns);
   }, [setHiddenColumns, hiddenColumns]);
+
   const { t, i18n } = useTranslation();
 
   let locale: Locale;
@@ -67,10 +71,7 @@ function Table({ data, columns, hiddenColumns, apiConfig }) {
     setShowModalDisconnect(true);
   };
 
-  const renderCell = (
-    cell: { column: { id: string }; row: { original: { id: string } }; value: number },
-    locale: Locale
-  ) => {
+  const renderCell = (cell, locale) => {
     switch (cell.column.id) {
       case 'ctrl':
         return (
@@ -91,6 +92,11 @@ function Table({ data, columns, hiddenColumns, apiConfig }) {
         return cell.value;
     }
   };
+
+  // 当排序状态改变时，将新状态保存到本地存储
+  useEffect(() => {
+    localStorage.setItem('tableSortBy', JSON.stringify(state.sortBy));
+  }, [state.sortBy]);
 
   return (
     <div style={{ marginTop: '5px' }}>
